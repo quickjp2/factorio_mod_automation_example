@@ -20,6 +20,7 @@ jobs:
     outputs:
       modVersion: ${{ steps.version.outputs.modVersion }}
     steps:
+      - run: pwd && ls -alh
       # Create bodyFile from changelog.txt
       - name: Create version changes file
         run: sed -n '/version/I,/-\{10,\}/p' sample_mod/changelog.txt > bodyFile.txt

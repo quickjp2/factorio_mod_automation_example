@@ -78,7 +78,9 @@ jobs:
           commit: main
           tag: 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}'
           token: '${{secrets.GITHUB_TOKEN}}'
-          artifacts: ['sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}.zip']
+          artifacts: [
+            - 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}.zip'
+          ]
       # Upload .zip to mod portal
       # Create mod pack .zip
       # Upload pack .zip to mega

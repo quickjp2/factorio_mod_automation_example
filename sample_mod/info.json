@@ -1,0 +1,14 @@
+{
+    "name": "sample_mod",
+    "version": "0.0.1",
+    "factorio_version": "1.1",
+    "title": "Sample Mod",
+    "author": "quickjp2",
+    "contact": "",
+    "homepage": "https://github.com/quickjp2/factorio_mod_automation_example/wiki",
+    "description": "Sample mod structure for testing deployment automation",
+    "dependencies": [
+      "base"
+    ]
+  }
+  

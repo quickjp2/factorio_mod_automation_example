@@ -1,0 +1,61 @@
+name: Deploy Mod
+on:
+  push:
+    paths:
+    - 'sample_mod/**.json' # Triggers only if the mod info file is updated
+    branches:
+      - "main"
+jobs:
+  Setup-Reqs:
+    if: github.repository_owner == 'quickjp2'
+    runs-on: ubuntu-latest
+    outputs:
+      modVersion: ${{ steps.version.outputs.modVersion }}
+    steps:
+      # Create bodyFile from changelog.txt
+      - name: Create version changes file
+        run: sed -n '/version/I,/-\{10,\}/p' ${{ github.workspace }}/sample_mod/changelog.txt > bodyFile.txt
+      # Create tag from changelog.txt
+      - name: Create version changes file
+        id: version
+        run: echo "::set-output name=modVersion::$(sed -rn "s/version: (\d*)/\1/Ip" ${{ github.workspace }}/sample_mod/changelog.txt)"
+      # Store bodyFile
+      - name: Archive version changes file
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-notes
+          path: sample_mod/bodyFile.txt
+          retention-days: 1
+
+  Deploy-Mod:
+    if: github.repository_owner == 'quickjp2'
+    runs-on: ubuntu-latest
+    needs: Setup-Reqs
+    steps:
+    # Update dates on each mod if required (Sea Block, Sea Block Pack, Landfill Painting, Circuit Processing)
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      # Create .zip for mod
+      # Commit to GitHub and create tags
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Download release bodyFile
+        uses: actions/download-artifact@v2
+        with:
+          name: release-notes
+      # Create GitHub releases
+      - name: Create Release
+        uses: ncipollo/release-action@v1.8.6
+        with:
+          bodyFile: bodyFile.txt
+          commit: main
+          tag: '${{needs.Setup-Reqs.outputs.modVersion}}'
+          token: '${{secrets.GITHUB_TOKEN}}'
+      # Upload .zip to mod portal
+      # Create mod pack .zip
+      # Upload pack .zip to mega
+      # Update Forum post, including breaking changes (if any)
+      # Update Reddit post, including breaking changes (if any)
+      # Update Sea Block wiki with breaking changes (if any)

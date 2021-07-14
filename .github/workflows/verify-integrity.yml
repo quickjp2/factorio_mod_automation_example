@@ -1,0 +1,14 @@
+name: Verify Factorio Mod
+on:
+  push:
+    branches:
+      - "develop"
+  pull_request:
+jobs:
+  Verify-Factorio-Mod:
+    if: github.repository_owner == 'quickjp2'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "Placeholder job for checking the integrity of the develop branch."
+      - run: echo "Used to make sure everything is cleared for a push to master"

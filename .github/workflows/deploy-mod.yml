@@ -20,6 +20,9 @@ jobs:
     outputs:
       modVersion: ${{ steps.version.outputs.modVersion }}
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
       - run: pwd && ls -alh
       # Create bodyFile from changelog.txt
       - name: Create version changes file

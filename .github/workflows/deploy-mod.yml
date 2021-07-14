@@ -31,12 +31,21 @@ jobs:
       - name: Create version tag
         id: version
         run: echo ::set-output name=modVersion::$(grep -m 1 -i version ./sample_mod/changelog.txt | sed -rn 's/version.{1,2}(\d*)/\1/Ip')
+      - name: Create mod zip
+        run: zip -r sample_mod_${{steps.version.outputs.modVersion}}.zip ./sample_mod -x '*.git*'
       # Store bodyFile
       - name: Archive version changes file
         uses: actions/upload-artifact@v2
         with:
           name: release-notes
           path: bodyFile.txt
+          retention-days: 1
+      # Store mod zip file
+      - name: Archive version changes file
+        uses: actions/upload-artifact@v2
+        with:
+          name: mod-zip-file
+          path: sample_mod_${{steps.version.outputs.modVersion}}.zip
           retention-days: 1
 
   Deploy-Mod:
@@ -57,6 +66,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: release-notes
+      - name: Download mod zip
+        uses: actions/download-artifact@v2
+        with:
+          name: mod-zip-file
       # Create GitHub releases
       - name: Create Release
         uses: ncipollo/release-action@v1.8.6
@@ -65,6 +78,7 @@ jobs:
           commit: main
           tag: 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}'
           token: '${{secrets.GITHUB_TOKEN}}'
+          artifacts: ['sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}.zip']
       # Upload .zip to mod portal
       # Create mod pack .zip
       # Upload pack .zip to mega

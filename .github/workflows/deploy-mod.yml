@@ -63,7 +63,7 @@ jobs:
         with:
           bodyFile: bodyFile.txt
           commit: main
-          tag: '${{needs.Setup-Reqs.outputs.modVersion}}'
+          tag: 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}'
           token: '${{secrets.GITHUB_TOKEN}}'
       # Upload .zip to mod portal
       # Create mod pack .zip

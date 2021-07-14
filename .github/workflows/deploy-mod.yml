@@ -78,12 +78,4 @@ jobs:
           commit: main
           tag: 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}'
           token: '${{secrets.GITHUB_TOKEN}}'
-          artifacts: [
-            - 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}.zip'
-          ]
-      # Upload .zip to mod portal
-      # Create mod pack .zip
-      # Upload pack .zip to mega
-      # Update Forum post, including breaking changes (if any)
-      # Update Reddit post, including breaking changes (if any)
-      # Update Sea Block wiki with breaking changes (if any)
+          artifacts: 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}.zip'

@@ -30,7 +30,7 @@ jobs:
       # Create tag from changelog.txt
       - name: Create version changes file
         id: version
-        run: echo ::set-output name=modVersion::$(sed -rn 's/version{1,2}(\d*)/\1/Ip' ./sample_mod/changelog.txt)
+        run: echo ::set-output name=modVersion::$(sed -rn 's/version.{1,2}(\d*)/\1/Ip' ./sample_mod/changelog.txt)
       # Store bodyFile
       - name: Archive version changes file
         uses: actions/upload-artifact@v2

@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release-notes
-          path: sample_mod/bodyFile.txt
+          path: bodyFile.txt
           retention-days: 1
 
   Deploy-Mod:

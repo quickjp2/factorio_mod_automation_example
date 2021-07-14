@@ -28,9 +28,9 @@ jobs:
       - name: Create version changes file
         run: sed -n '/version/I,/-\{10,\}/p' ./sample_mod/changelog.txt > bodyFile.txt
       # Create tag from changelog.txt
-      - name: Create version changes file
+      - name: Create version tag
         id: version
-        run: echo ::set-output name=modVersion::$(sed -rn '1,/version/I s/version.{1,2}(\d*)/\1/Ip' ./sample_mod/changelog.txt)
+        run: echo ::set-output name=modVersion::$(grep -m 1 -i version ./sample_mod/changelog.txt | sed -rn 's/version.{1,2}(\d*)/\1/Ip')
       # Store bodyFile
       - name: Archive version changes file
         uses: actions/upload-artifact@v2

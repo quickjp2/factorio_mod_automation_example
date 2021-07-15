@@ -9,8 +9,9 @@ This repo is used to develop/test automation for factorio mod development
 ## How to use
 
 1. Copy the full folder structure of .github
-2. Update the variables to your mod
-3. Push changes
+1. Update the name of the mod in the file name of `deploy-mod.yml` (ie. `deploy-Seablock.yml) *No spaces allowed*
+1. Update the variables to your mod
+1. Push changes
 
 ### Assumptions
 

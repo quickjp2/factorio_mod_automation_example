@@ -1,4 +1,4 @@
-name: Deploy Mod
+name: Deploy sample_mod
 on:
   workflow_dispatch:
     inputs:
@@ -6,8 +6,6 @@ on:
         description: 'Log level'     
         required: true
         default: 'warning'
-      tags:
-        description: 'Test scenario tags' 
   push:
     paths:
     - 'sample_mod/**.json' # Triggers only if the mod info file is updated
@@ -74,6 +72,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.8.6
         with:
+          allowUpdates: true
           bodyFile: bodyFile.txt
           commit: main
           tag: 'sample_mod_${{needs.Setup-Reqs.outputs.modVersion}}'
